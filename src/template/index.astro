@@ -1,0 +1,85 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "../../../layouts/Layout.astro";
+import PostItem from "../../../components/PostItem.astro";
+import Pagination from "../../../components/Pagination.astro";
+
+export async function getStaticPaths() {
+  const getTimestamp = (dateVal: any) => {
+    if (!dateVal) return 0;
+    const normalized =
+      typeof dateVal === "string" ? dateVal.replace(/-/g, "/") : dateVal;
+    const time = new Date(normalized).valueOf();
+    return Number.isNaN(time) ? 0 : time;
+  };
+
+  const posts = (await getCollection("blog")).filter(
+    (p) => p.data.status === "publish",
+  );
+  const subCategoryMap = new Map<string, any[]>();
+
+  posts.forEach((p) => {
+    p.data.categories?.forEach((cat: any) => {
+      if (
+        cat.slug &&
+        cat.slug !== "sogetsu" &&
+        cat.slug !== "tenjikai" &&
+        !cat.slug.startsWith("tag/")
+      ) {
+        if (!subCategoryMap.has(cat.slug)) {
+          subCategoryMap.set(cat.slug, []);
+        }
+        subCategoryMap.get(cat.slug)!.push(p);
+      }
+    });
+  });
+
+  return Array.from(subCategoryMap.entries()).map(([subSlug, catPosts]) => {
+    const sortedPosts = catPosts.sort(
+      (a, b) => getTimestamp(b.data.date) - getTimestamp(a.data.date),
+    );
+    const categoryName =
+      sortedPosts[0]?.data.categories?.find((c: any) => c.slug === subSlug)
+        ?.name || subSlug;
+
+    return {
+      params: { sub: subSlug },
+      props: { posts: sortedPosts, categoryName },
+    };
+  });
+}
+
+const { posts, categoryName } = Astro.props;
+const sub = Astro.params.sub;
+
+const pageSize = 10;
+const currentPosts = posts.slice(0, pageSize);
+
+const postsWithContent = await Promise.all(
+  currentPosts.map(async (p) => {
+    const { Content } = await render(p);
+    return { post: p, Content };
+  }),
+);
+
+const page = {
+  currentPage: 1,
+  lastPage: Math.ceil(posts.length / pageSize),
+  url: {
+    prev: null,
+    next: posts.length > pageSize ? `/sogetsu/${sub}/page/2/` : null,
+  },
+};
+---
+
+<Layout title={`Category: ${categoryName} - kikuko.info`}>
+  <p class="page-title">
+    Category Archives: <span>{categoryName}</span>
+  </p>
+
+  {postsWithContent.map(({ post, Content }) => (
+    <PostItem post={post} Content={Content} />
+  ))}
+
+  <Pagination page={page} baseUrl={`/sogetsu/${sub}/`} />
+</Layout>

@@ -1,0 +1,100 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import PostItem from "../../components/PostItem.astro";
+import Pagination from "../../components/Pagination.astro";
+
+export async function getStaticPaths() {
+  // status: "publish" の公開記事のみに絞り込む
+  const posts = (await getCollection("blog")).filter(
+    (p) => p.data.status === "publish",
+  );
+  const tagMap = new Map<string, { name: string; posts: any[] }>();
+
+  posts.forEach((p) => {
+    const rawTags = p.data.tags || [];
+    rawTags.forEach((tag: any) => {
+      const rawSlug = typeof tag === "string" ? tag : tag.slug || tag.name;
+      const tName = typeof tag === "string" ? tag : tag.name || tag.slug;
+
+      if (rawSlug) {
+        let decodedSlug = rawSlug;
+        try {
+          decodedSlug = decodeURIComponent(rawSlug);
+        } catch {
+          decodedSlug = rawSlug;
+        }
+
+        if (!tagMap.has(decodedSlug)) {
+          tagMap.set(decodedSlug, { name: tName || decodedSlug, posts: [] });
+        }
+        tagMap.get(decodedSlug)!.posts.push(p);
+      }
+    });
+  });
+
+  const paths: any[] = [];
+
+  tagMap.forEach(({ name, posts: tagPosts }, decodedSlug) => {
+    const getTimestamp = (dateVal: any) => {
+      if (!dateVal) return 0;
+      const normalized =
+        typeof dateVal === "string" ? dateVal.replace(/-/g, "/") : dateVal;
+      const time = new Date(normalized).valueOf();
+      return Number.isNaN(time) ? 0 : time;
+    };
+
+    const sortedPosts = tagPosts.sort(
+      (a, b) => getTimestamp(b.data.date) - getTimestamp(a.data.date),
+    );
+
+    paths.push({
+      params: { tag: decodedSlug },
+      props: { posts: sortedPosts, tagName: name, canonicalTag: decodedSlug },
+    });
+
+    const encodedSlug = encodeURIComponent(decodedSlug);
+    if (encodedSlug !== decodedSlug) {
+      paths.push({
+        params: { tag: encodedSlug },
+        props: { posts: sortedPosts, tagName: name, canonicalTag: decodedSlug },
+      });
+    }
+  });
+
+  return paths;
+}
+
+const { posts, tagName, canonicalTag } = Astro.props;
+
+const pageSize = 10;
+const currentPosts = posts.slice(0, pageSize);
+
+const postsWithContent = await Promise.all(
+  currentPosts.map(async (p: any) => {
+    const { Content } = await render(p);
+    return { post: p, Content };
+  }),
+);
+
+const page = {
+  currentPage: 1,
+  lastPage: Math.ceil(posts.length / pageSize),
+  url: {
+    prev: null,
+    next: posts.length > pageSize ? `/tag/${canonicalTag}/page/2/` : null,
+  },
+};
+---
+
+<Layout title={`Tag: ${tagName} - kikuko.info`}>
+  <p class="page-title">
+    Tag Archives: <span>{tagName}</span>
+  </p>
+
+  {postsWithContent.map(({ post, Content }) => (
+    <PostItem post={post} Content={Content} />
+  ))}
+
+  <Pagination page={page} baseUrl={`/tag/${canonicalTag}/`} />
+</Layout>

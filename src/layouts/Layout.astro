@@ -1,0 +1,152 @@
+---
+import Sidebar from "../components/Sidebar.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = "kikuko.info", description = "草月・生花" } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <!-- Google Tag Manager -->
+    <script is:inline>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-***");
+    </script>
+    <!-- End Google Tag Manager -->
+
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <!-- <meta name="keywords" content="草月,生花" /> -->
+    <link rel="shortcut icon" href={`${import.meta.env.BASE_URL}favicon.ico`} />
+    <link
+      rel="apple-touch-icon-precomposed"
+      href={`${import.meta.env.BASE_URL}favicon-152.png`}
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href={`${import.meta.env.BASE_URL}style.css`} />
+
+    <!-- Highslide -->
+    <script
+      type="text/javascript"
+      src={`${import.meta.env.BASE_URL}highslide/highslide.js`}
+      is:inline
+    ></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href={`${import.meta.env.BASE_URL}highslide/highslide.css`}
+    />
+
+    <script type="text/javascript" is:inline>
+      if (typeof hs !== "undefined") {
+        hs.graphicsDir = `${import.meta.env.BASE_URL}highslide/graphics/`;
+        hs.wrapperClassName = "wide-border";
+      }
+    </script>
+
+    <!-- JavaScript -->
+    <script src={`${import.meta.env.BASE_URL}js/main.js`} is:inline></script>
+  </head>
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+      <iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-***"
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"
+      ></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <header class="header" id="top">
+      <div class="global-navi">
+        <ul>
+          <li>
+            <a href={base}>Home</a>
+          </li>
+          <li>
+            <a href={base}>生花教室</a>
+          </li>
+          <li>
+            <a href={base}>生花作品集</a>
+          </li>
+        </ul>
+      </div>
+      <!-- /.global-navi -->
+
+      <div class="header-logo">
+        <h1>
+          <a href={base} title="kikuko.info">
+            kikuko.info
+          </a>
+        </h1>
+      </div>
+      <!-- /.header-logo -->
+    </header>
+    <!-- /.header -->
+
+    <div class="wrap">
+      <!-- メインコンテンツエリア -->
+      <div class="content">
+        <slot />
+      </div>
+      <!-- /.content -->
+
+      <!-- サイドバーエリア -->
+      <div class="side">
+        <Sidebar />
+      </div>
+      <!-- /.side -->
+    </div>
+    <!-- /.wrap -->
+
+    <div class="pagetop">
+      <a href="#top">ページトップへ</a>
+    </div>
+
+    <footer class="footer">
+      <div class="copyright">
+        <p>
+          Copyright &copy; {new Date().getFullYear()} kikuko.info All right
+          reserved.
+        </p>
+      </div>
+    </footer>
+    <!-- /.footer -->
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-***"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "UA-***");
+    </script>
+  </body>
+</html>

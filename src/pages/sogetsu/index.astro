@@ -1,0 +1,53 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import PostItem from "../../components/PostItem.astro";
+import Pagination from "../../components/Pagination.astro";
+
+const getTimestamp = (dateVal: any) => {
+  if (!dateVal) return 0;
+  const normalized =
+    typeof dateVal === "string" ? dateVal.replace(/-/g, "/") : dateVal;
+  const time = new Date(normalized).valueOf();
+  return Number.isNaN(time) ? 0 : time;
+};
+
+const posts = (await getCollection("blog"))
+  .filter(
+    (p) =>
+      p.data.status === "publish" &&
+      p.data.categories?.some((c: any) => c.slug === "sogetsu"),
+  )
+  .sort((a, b) => getTimestamp(b.data.date) - getTimestamp(a.data.date));
+
+const pageSize = 10;
+const currentPosts = posts.slice(0, pageSize);
+
+const postsWithContent = await Promise.all(
+  currentPosts.map(async (p) => {
+    const { Content } = await render(p);
+    return { post: p, Content };
+  }),
+);
+
+const page = {
+  currentPage: 1,
+  lastPage: Math.ceil(posts.length / pageSize),
+  url: {
+    prev: null,
+    next: posts.length > pageSize ? "/sogetsu/page/2/" : null,
+  },
+};
+---
+
+<Layout title="Category: 草月 - kikuko.info">
+  <p class="page-title">
+    Category Archives: <span>草月</span>
+  </p>
+
+  {postsWithContent.map(({ post, Content }) => (
+    <PostItem post={post} Content={Content} />
+  ))}
+
+  <Pagination page={page} baseUrl="/sogetsu/" />
+</Layout>

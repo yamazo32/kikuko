@@ -1,0 +1,43 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import PostItem from "../../components/PostItem.astro";
+import Pagination from "../../components/Pagination.astro";
+
+export async function getStaticPaths({ paginate }) {
+  // 日付文字列を安全にタイムスタンプ（数値）に変換するヘルパー関数
+  const getTimestamp = (dateVal: any) => {
+    if (!dateVal) return 0;
+    // WordPress形式（YYYY-MM-DD HH:mm:ss等）のハイフンをスラッシュに置換して安定させる
+    const normalized =
+      typeof dateVal === "string" ? dateVal.replace(/-/g, "/") : dateVal;
+    const time = new Date(normalized).valueOf();
+    return Number.isNaN(time) ? 0 : time;
+  };
+
+  // status: "publish" の公開記事のみに絞り込んでから、安全な方法で日付順にソート
+  const posts = (await getCollection("blog"))
+    .filter((post) => post.data.status === "publish")
+    .sort((a, b) => getTimestamp(b.data.date) - getTimestamp(a.data.date));
+
+  return paginate(posts, { pageSize: 10 });
+}
+
+const { page } = Astro.props;
+const posts = page.data;
+
+const postsWithContent = await Promise.all(
+  posts.map(async (p: any) => {
+    const { Content } = await render(p);
+    return { post: p, Content };
+  }),
+);
+---
+
+<Layout title={`kikuko.info - Page ${page.currentPage}`}>
+  {postsWithContent.map(({ post, Content }) => (
+    <PostItem post={post} Content={Content} />
+  ))}
+
+  <Pagination page={page} baseUrl="/" />
+</Layout>

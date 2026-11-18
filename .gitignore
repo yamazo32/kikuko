@@ -1,0 +1,46 @@
+# build output
+dist/
+# generated types
+.astro/
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+
+# environment variables
+.env
+.env.production
+
+# macOS-specific files
+.DS_Store
+
+# jetbrains setting folder
+.idea/
+
+# Database and backup files
+tar/
+*.sql
+*.sqlite
+*.sqlite3
+*.db
+*.dump
+
+# Local development and database scripts
+extract-private.js
+add-status.js
+convert.js
+AGENTS.md
+.vscode/
+
+# Backup and local database exports
+src/backup/
+ymz_posts_*.json
+ymz_terms_*.json
+
+public/js/mainOLD.js

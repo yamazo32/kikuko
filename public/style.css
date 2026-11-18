@@ -1,0 +1,951 @@
+@charset "UTF-8";
+/*
+Theme Name: yamazo
+version: 1.0
+Author: 大和栄蔵
+*/
+/**
+ * Reset
+ * -----------------------------------------------------------------------------
+ */
+/*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+/**
+ * 1. Set default font family to sans-serif.
+ * 2. Prevent iOS and IE text size adjust after device orientation change,
+ *    without disabling user zoom.
+ */
+/* line 10, sass/_normalize.scss */
+html {
+  font-family: sans-serif;
+  /* 1 */
+  -ms-text-size-adjust: 100%;
+  /* 2 */
+  -webkit-text-size-adjust: 100%;
+  /* 2 */
+}
+
+/**
+ * Remove default margin.
+ */
+/* line 20, sass/_normalize.scss */
+body {
+  margin: 0; }
+
+/* HTML5 display definitions
+   ========================================================================== */
+/**
+ * Correct `block` display not defined for any HTML5 element in IE 8/9.
+ * Correct `block` display not defined for `details` or `summary` in IE 10/11
+ * and Firefox.
+ * Correct `block` display not defined for `main` in IE 11.
+ */
+/* line 34, sass/_normalize.scss */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section,
+summary {
+  display: block; }
+
+/**
+ * 1. Correct `inline-block` display not defined in IE 8/9.
+ * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.
+ */
+/* line 55, sass/_normalize.scss */
+audio,
+canvas,
+progress,
+video {
+  display: inline-block;
+  /* 1 */
+  vertical-align: baseline;
+  /* 2 */ }
+
+/**
+ * Prevent modern browsers from displaying `audio` without controls.
+ * Remove excess height in iOS 5 devices.
+ */
+/* line 68, sass/_normalize.scss */
+audio:not([controls]) {
+  display: none;
+  height: 0; }
+
+/**
+ * Address `[hidden]` styling not present in IE 8/9/10.
+ * Hide the `template` element in IE 8/9/10/11, Safari, and Firefox < 22.
+ */
+/* line 78, sass/_normalize.scss */
+[hidden],
+template {
+  display: none; }
+
+/* Links
+   ========================================================================== */
+/**
+ * Remove the gray background color from active links in IE 10.
+ */
+/* line 90, sass/_normalize.scss */
+a {
+  background-color: transparent; }
+
+/**
+ * Improve readability of focused elements when they are also in an
+ * active/hover state.
+ */
+/* line 99, sass/_normalize.scss */
+a:active,
+a:hover {
+  outline: 0; }
+
+/* Text-level semantics
+   ========================================================================== */
+/**
+ * Address styling not present in IE 8/9/10/11, Safari, and Chrome.
+ */
+/* line 111, sass/_normalize.scss */
+abbr[title] {
+  border-bottom: 1px dotted; }
+
+/**
+ * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.
+ */
+/* line 119, sass/_normalize.scss */
+b,
+strong {
+  font-weight: bold; }
+
+/**
+ * Address styling not present in Safari and Chrome.
+ */
+/* line 128, sass/_normalize.scss */
+dfn {
+  font-style: italic; }
+
+/**
+ * Address variable `h1` font-size and margin within `section` and `article`
+ * contexts in Firefox 4+, Safari, and Chrome.
+ */
+/* line 137, sass/_normalize.scss */
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0; }
+
+/**
+ * Address styling not present in IE 8/9.
+ */
+/* line 146, sass/_normalize.scss */
+mark {
+  background: #ff0;
+  color: #000; }
+
+/**
+ * Address inconsistent and variable font size in all browsers.
+ */
+/* line 155, sass/_normalize.scss */
+small {
+  font-size: 80%; }
+
+/**
+ * Prevent `sub` and `sup` affecting `line-height` in all browsers.
+ */
+/* line 163, sass/_normalize.scss */
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline; }
+
+/* line 171, sass/_normalize.scss */
+sup {
+  top: -0.5em; }
+
+/* line 175, sass/_normalize.scss */
+sub {
+  bottom: -0.25em; }
+
+/* Embedded content
+   ========================================================================== */
+/**
+ * Remove border when inside `a` element in IE 8/9/10.
+ */
+/* line 186, sass/_normalize.scss */
+img {
+  border: 0; }
+
+/**
+ * Correct overflow not hidden in IE 9/10/11.
+ */
+/* line 194, sass/_normalize.scss */
+svg:not(:root) {
+  overflow: hidden; }
+
+/* Grouping content
+   ========================================================================== */
+/**
+ * Address margin not present in IE 8/9 and Safari.
+ */
+/* line 205, sass/_normalize.scss */
+figure {
+  margin: 1em 40px; }
+
+/**
+ * Address differences between Firefox and other browsers.
+ */
+/* line 213, sass/_normalize.scss */
+hr {
+  box-sizing: content-box;
+  height: 0; }
+
+/**
+ * Contain overflow in all browsers.
+ */
+/* line 222, sass/_normalize.scss */
+pre {
+  overflow: auto; }
+
+/**
+ * Address odd `em`-unit font size rendering in all browsers.
+ */
+/* line 230, sass/_normalize.scss */
+code,
+kbd,
+pre,
+samp {
+  font-family: monospace, monospace;
+  font-size: 1em; }
+
+/* Forms
+   ========================================================================== */
+/**
+ * Known limitation: by default, Chrome and Safari on OS X allow very limited
+ * styling of `select`, unless a `border` property is set.
+ */
+/**
+ * 1. Correct color not being inherited.
+ *    Known issue: affects color of disabled elements.
+ * 2. Correct font properties not being inherited.
+ * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.
+ */
+/* line 253, sass/_normalize.scss */
+button,
+input,
+optgroup,
+select,
+textarea {
+  color: inherit;
+  /* 1 */
+  font: inherit;
+  /* 2 */
+  margin: 0;
+  /* 3 */ }
+
+/**
+ * Address `overflow` set to `hidden` in IE 8/9/10/11.
+ */
+/* line 267, sass/_normalize.scss */
+button {
+  overflow: visible; }
+
+/**
+ * Address inconsistent `text-transform` inheritance for `button` and `select`.
+ * All other form control elements do not inherit `text-transform` values.
+ * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.
+ * Correct `select` style inheritance in Firefox.
+ */
+/* line 278, sass/_normalize.scss */
+button,
+select {
+  text-transform: none; }
+
+/**
+ * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
+ *    and `video` controls.
+ * 2. Correct inability to style clickable `input` types in iOS.
+ * 3. Improve usability and consistency of cursor style between image-type
+ *    `input` and others.
+ */
+/* line 291, sass/_normalize.scss */
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  -webkit-appearance: button;
+  /* 2 */
+  cursor: pointer;
+  /* 3 */ }
+
+/**
+ * Re-set default cursor for disabled elements.
+ */
+/* line 303, sass/_normalize.scss */
+button[disabled],
+html input[disabled] {
+  cursor: default; }
+
+/**
+ * Remove inner padding and border in Firefox 4+.
+ */
+/* line 312, sass/_normalize.scss */
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0; }
+
+/**
+ * Address Firefox 4+ setting `line-height` on `input` using `!important` in
+ * the UA stylesheet.
+ */
+/* line 323, sass/_normalize.scss */
+input {
+  line-height: normal; }
+
+/**
+ * It's recommended that you don't attempt to style these elements.
+ * Firefox's implementation doesn't respect box-sizing, padding, or width.
+ *
+ * 1. Address box sizing set to `content-box` in IE 8/9/10.
+ * 2. Remove excess padding in IE 8/9/10.
+ */
+/* line 335, sass/_normalize.scss */
+input[type="checkbox"],
+input[type="radio"] {
+  box-sizing: border-box;
+  /* 1 */
+  padding: 0;
+  /* 2 */ }
+
+/**
+ * Fix the cursor style for Chrome's increment/decrement buttons. For certain
+ * `font-size` values of the `input`, it causes the cursor style of the
+ * decrement button to change from `default` to `text`.
+ */
+/* line 347, sass/_normalize.scss */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  height: auto; }
+
+/**
+ * 1. Address `appearance` set to `searchfield` in Safari and Chrome.
+ * 2. Address `box-sizing` set to `border-box` in Safari and Chrome.
+ */
+/* line 357, sass/_normalize.scss */
+input[type="search"] {
+  -webkit-appearance: textfield;
+  /* 1 */
+  box-sizing: content-box;
+  /* 2 */ }
+
+/**
+ * Remove inner padding and search cancel button in Safari and Chrome on OS X.
+ * Safari (but not Chrome) clips the cancel button when the search input has
+ * padding (and `textfield` appearance).
+ */
+/* line 368, sass/_normalize.scss */
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none; }
+
+/**
+ * Define consistent border, margin, and padding.
+ */
+/* line 377, sass/_normalize.scss */
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em; }
+
+/**
+ * 1. Correct `color` not being inherited in IE 8/9/10/11.
+ * 2. Remove padding so people aren't caught out if they zero out fieldsets.
+ */
+/* line 388, sass/_normalize.scss */
+legend {
+  border: 0;
+  /* 1 */
+  padding: 0;
+  /* 2 */ }
+
+/**
+ * Remove default vertical scrollbar in IE 8/9/10/11.
+ */
+/* line 397, sass/_normalize.scss */
+textarea {
+  overflow: auto; }
+
+/**
+ * Don't inherit the `font-weight` (applied by a rule above).
+ * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.
+ */
+/* line 406, sass/_normalize.scss */
+optgroup {
+  font-weight: bold; }
+
+/* Tables
+   ========================================================================== */
+/**
+ * Remove most spacing between table cells.
+ */
+/* line 417, sass/_normalize.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/* line 422, sass/_normalize.scss */
+td,
+th {
+  padding: 0; }
+
+/**
+ * Base
+ * -----------------------------------------------------------------------------
+ */
+/* basic */
+/* line 4, sass/_base.scss */
+body {
+  color: #333;
+  font-family: 'メイリオ', 'Hiragino Kaku Gothic Pro', sans-serif;
+  font-size: 14px;
+  font-size: 0.875rem;
+  background: url("./images/background.gif") repeat; }
+
+/* line 13, sass/_base.scss */
+::selection {
+  background-color: #6aa3d5;
+  color: #fff;
+  text-shadow: none; }
+
+/* line 18, sass/_base.scss */
+::-moz-selection {
+  background-color: #6aa3d5;
+  color: #fff;
+  text-shadow: none; }
+
+/* link */
+/* line 26, sass/_base.scss */
+a {
+  color: #555;
+  text-decoration: none; }
+
+/* line 31, sass/_base.scss */
+a:hover,
+a:focus {
+  color: #e67a00; }
+
+/* table */
+/* line 38, sass/_base.scss */
+table {
+  margin-bottom: 20px;
+  width: 100%; }
+
+/* line 43, sass/_base.scss */
+caption {
+  padding: 10px; }
+
+/* line 47, sass/_base.scss */
+th, td {
+  padding: 10px; }
+
+/* form */
+/* line 53, sass/_base.scss */
+button,
+select,
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  padding: 4px 8px;
+  border: 1px solid #ccc;
+  border-radius: 3px; }
+
+/* line 69, sass/_base.scss */
+textarea {
+  padding: 8px;
+  resize: vertical; }
+
+/* line 74, sass/_base.scss */
+select,
+label,
+input[type="radio"],
+input[type="checkbox"],
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  cursor: pointer; }
+
+/* line 84, sass/_base.scss */
+button[disabled],
+input[disabled] {
+  cursor: default; }
+
+/* line 89, sass/_base.scss */
+input[type="radio"],
+input[type="checkbox"] {
+  vertical-align: -2px; }
+
+/* line 94, sass/_base.scss */
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  font-size: 12px;
+  font-size: 0.75rem;
+  font-family: inherit;
+  background-color: #555;
+  color: #fff; }
+  /* line 101, sass/_base.scss */
+  input[type="button"]:hover,
+  input[type="submit"]:hover,
+  input[type="reset"]:hover {
+    color: #fff;
+    background-color: #ff8800; }
+  /* line 105, sass/_base.scss */
+  input[type="button"]:active,
+  input[type="submit"]:active,
+  input[type="reset"]:active {
+    color: #fff;
+    background-color: #c00; }
+
+/* 旧ブラウザへの注意喚起 */
+/* line 113, sass/_base.scss */
+.browsehappy {
+  margin: 0;
+  padding: 10px;
+  text-align: center;
+  color: #fff;
+  background: #c00; }
+
+/* line 121, sass/_base.scss */
+.browsehappy a:link,
+.browsehappy a:visited {
+  color: #fff; }
+
+/* line 125, sass/_base.scss */
+.browsehappy a:hover,
+.browsehappy a:active {
+  text-decoration: none;
+  color: #fff; }
+
+/* pagetop */
+/* line 133, sass/_base.scss */
+/* pagetop */
+.pagetop {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  position: fixed;
+  bottom: 300px;
+  right: 50px;
+  z-index: 99;
+}
+
+/* スクロール後にJSでこのクラスが付与されてフェードインする */
+.pagetop.is-show {
+  opacity: 0.7; /* 元のCSSの不透明度 */
+  visibility: visible;
+}
+
+.pagetop a {
+  display: block;
+  width: 50px;
+  height: 0;
+  overflow: hidden;
+  padding-top: 50px;
+  background: #FF8800 url(./images/pagetop.png) no-repeat 0 0;
+  border-radius: 45px;
+}
+
+/**
+ * Utility
+ * -----------------------------------------------------------------------------
+ */
+/* clearfix */
+/* line 4, sass/_utility.scss */
+.wrap:after {
+  content: "";
+  display: block;
+  clear: both; }
+
+/**
+ * Layout
+ * -----------------------------------------------------------------------------
+ */
+/* ボックスのサイズ */
+/* line 4, sass/_layout.scss */
+.header, .wrap, .footer {
+  margin-left: auto;
+  margin-right: auto;
+  width: 920px;
+  background-color: #fff; }
+
+/* ボックス外側（横）の余白 */
+/* line 12, sass/_layout.scss */
+.header, .wrap, .footer {
+  padding-left: 10px;
+  padding-right: 10px;
+  box-sizing: border-box; }
+
+/* wrap内のflort */
+/* line 24, sass/_layout.scss */
+.content {
+  float: left;
+  width: 540px;
+  padding-left: 20px;
+  padding-right: 20px;
+  box-sizing: border-box; }
+
+/* line 32, sass/_layout.scss */
+.side {
+  float: right;
+  width: 360px;
+  padding-left: 10px;
+  padding-right: 10px;
+  box-sizing: border-box; }
+
+/* 各ボックスの上下の間隔 */
+/* line 42, sass/_layout.scss */
+.header {
+  padding-top: 10px;
+  padding-bottom: 10px; }
+
+/* line 47, sass/_layout.scss */
+.wrap {
+  padding-top: 20px;
+  padding-bottom: 30px; }
+
+/* line 52, sass/_layout.scss */
+.footer {
+  padding-top: 10px;
+  padding-bottom: 10px; }
+
+/**
+ * Header
+ * -----------------------------------------------------------------------------
+ */
+/* global-navi */
+/* line 4, sass/_header.scss */
+.global-navi ul {
+  margin: 0;
+  padding: 0 20px;
+  list-style: none; }
+
+/* line 10, sass/_header.scss */
+.global-navi li {
+  display: inline-block; }
+
+/* line 14, sass/_header.scss */
+.global-navi li a {
+  display: block;
+  padding: 0 10px;
+  font-size: 12px;
+  font-size: 0.75rem; }
+
+/* logoの装飾 */
+/* line 21, sass/_header.scss */
+.header-logo h1 {
+  margin-top: 10px;
+  margin-bottom: 0; }
+
+/* line 26, sass/_header.scss */
+.header-logo a {
+  display: block;
+  height: 0;
+  padding-top: 140px;
+  background: url(./images/header_logo.png) no-repeat;
+  overflow: hidden;
+  border-top: 1px solid #E5E5E5;
+  border-bottom: 3px solid #555; }
+
+/**
+ * Content
+ * -----------------------------------------------------------------------------
+ */
+/* 記事内の設定 */
+/* line 4, sass/_content.scss */
+.content article {
+  margin-bottom: 50px; }
+
+/* line 8, sass/_content.scss */
+.entry h1 a {
+  display: block;
+  color: #f80;
+  font-family: Arial;
+  font-weight: normal;
+  font-size: 23px;
+  font-size: 1.4375rem; }
+  /* line 14, sass/_content.scss */
+  .entry h1 a:hover {
+    color: #555; }
+
+/* line 19, sass/_content.scss */
+.entry h1 {
+  margin-top: 0;
+  margin-bottom: 5px; }
+
+/* line 24, sass/_content.scss */
+.entry-info {
+  padding-top: 5px;
+  border-top: 1px solid #eee;
+  font-size: 12px;
+  font-size: 0.75rem; }
+
+/* line 30, sass/_content.scss */
+.entry-info p {
+  margin: 0; }
+
+/* line 34, sass/_content.scss */
+.entry-tag {
+  font-size: 12px;
+  font-size: 0.75rem;
+  margin-bottom: 20px; }
+
+/* contentの中のテーブル（画像集） */
+/* line 40, sass/_content.scss */
+table.pic {
+  margin: 0 auto;
+  width: 480px;
+  height: auto; }
+
+/* line 46, sass/_content.scss */
+table.pic td {
+  padding: 5px;
+  width: 160px;
+  height: auto;
+  text-align: center; }
+
+/* line 53, sass/_content.scss */
+.entry .googleAd_336 {
+  margin: 0; }
+
+/* comment count */
+/* line 58, sass/_content.scss */
+.entry {
+  position: relative; }
+
+/* line 61, sass/_content.scss */
+.comment-count {
+  position: absolute;
+  top: 0;
+  right: 0; }
+
+/* line 67, sass/_content.scss */
+.comment-count a {
+  padding: 3px 8px;
+  background-color: #555;
+  border-radius: 8px;
+  display: block;
+  color: #fff;
+  font-weight: bold; }
+
+/* line 76, sass/_content.scss */
+.comment-count a:hover {
+  background-color: #FF8800;
+  color: #fff; }
+
+/* pagenavi */
+
+/* line 84, sass/_content.scss */
+.wp-pagenavi {
+  font-size: 11px;
+  font-size: 0.6875rem;
+  clear: both;
+  padding: 10px;
+  text-align: center; }
+
+/* line 90, sass/_content.scss */
+.wp-pagenavi .page,
+.wp-pagenavi .nextpostslink,
+.wp-pagenavi .previouspostslink,
+.wp-pagenavi .first,
+.wp-pagenavi .last,
+.wp-pagenavi .extend,
+.wp-pagenavi .current {
+  padding: 8px;
+  border: 1px solid #eee;
+  margin-right: -1px; }
+
+/* line 101, sass/_content.scss */
+.wp-pagenavi .pages {
+  padding-right: 10px; }
+
+/* line 105, sass/_content.scss */
+.wp-pagenavi .first {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px; }
+
+/* line 110, sass/_content.scss */
+.wp-pagenavi .last {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px; }
+
+/* line 116, sass/_content.scss */
+.wp-pagenavi a:hover,
+.wp-pagenavi .current {
+  background-color: #ff8800;
+  color: #fff; }
+
+/* 個別ページの設定
+ * --------------------------- */
+/* タイトルの設定 */
+/* line 126, sass/_content.scss */
+.page-title {
+  margin-top: 0;
+  font-size: 23px;
+  font-size: 1.4375rem; }
+
+/* コメント入力欄の設定 */
+/* line 132, sass/_content.scss */
+#respond label {
+  margin-left: 5px; }
+
+/* line 136, sass/_content.scss */
+#respond input[type="text"] {
+  background-color: #fafafa;
+  width: 220px; }
+
+/* line 141, sass/_content.scss */
+#respond textarea {
+  background-color: #fafafa;
+  width: 500px;
+  box-sizing: border-box; }
+
+/* コメント表示の設定 */
+/* line 148, sass/_content.scss */
+.commentlist {
+  margin-bottom: 50px;
+  padding-left: 0;
+  list-style: none; }
+
+/* line 154, sass/_content.scss */
+.commentlist li {
+  margin-bottom: 30px; }
+
+/* line 158, sass/_content.scss */
+.commentlist .comment {
+  padding: 20px 25px;
+  background-color: #fafafa; }
+
+/* line 163, sass/_content.scss */
+.comment .avatar,
+.comment .says {
+  display: none; }
+
+/* line 168, sass/_content.scss */
+.comment .fn {
+  font-weight: bold;
+  font-style: normal; }
+
+/* line 173, sass/_content.scss */
+.comment .comment-meta {
+  font-size: 12px;
+  font-size: 0.75rem; }
+
+/* line 178, sass/_content.scss */
+.comment p {
+  text-align: justify;
+  text-justify: inter-ideograph;
+  margin-bottom: 0; }
+
+/**
+ * SideArea
+ * -----------------------------------------------------------------------------
+ */
+/* line 3, sass/_sidearea.scss */
+.side aside {
+  margin-bottom: 30px; }
+
+/* カテゴリー タイトル */
+/* line 8, sass/_sidearea.scss */
+.widget h1 {
+  margin-top: 0;
+  font-size: 14px;
+  font-size: 0.875rem; }
+
+/* category
+----------------------------------*/
+/* line 15, sass/_sidearea.scss */
+.widget > ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid #eee; }
+
+/* line 22, sass/_sidearea.scss */
+.widget ul li a {
+  display: block;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  font-size: 14px;
+  font-size: 0.875rem;
+  border-bottom: 1px solid #eee; }
+
+/* line 31, sass/_sidearea.scss */
+.widget .cat-item span,
+.widget .link-item span {
+  display: inline;
+  margin-left: 5px;
+  padding: 2px 5px;
+  color: #555;
+  font-size: 12px;
+  font-size: 0.75rem;
+  background: #f0f0f0;
+  border-radius: 10px; }
+
+/* line 42, sass/_sidearea.scss */
+.widget .cat-item a:before,
+.widget .link-item a:before {
+  content: "▶";
+  font-size: 0.7rem;
+  margin-right: 5px; }
+
+/* メニュー内の2階層目 */
+/* line 49, sass/_sidearea.scss */
+.widget_categories .children {
+  padding-left: 25px;
+  list-style: none; }
+
+/* line 55, sass/_sidearea.scss */
+.widget_categories .children:last-child {
+  margin-bottom: 5px; }
+  
+/* tag */
+.tagcloud a {
+  display: inline;
+  margin-right: 6px;     /* 右側の隙間 */
+}
+
+/**
+ * Footer
+ * -----------------------------------------------------------------------------
+ */
+/* copyrightの装飾 */
+/* line 4, sass/_footer.scss */
+.copyright {
+  padding-left: 10px;
+  font-size: 12px;
+  font-size: 0.75rem;
+  color: #888;
+  border-top: 3px solid #EFEFEF; }
+
+/**
+ * Media Query
+ * -----------------------------------------------------------------------------
+ */
+/* ########### 359px以下 ########### */
+/* ########### 599px以下 ########### */
+/* ########### 600px以上～767px以下 ########### */
+/* ########### 767px以下 ########### */
+/* ########### 768px以上 ########### */
+/* ########### 1190px以上 ########### */

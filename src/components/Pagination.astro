@@ -1,0 +1,138 @@
+---
+const { page, baseUrl } = Astro.props;
+const base = import.meta.env.BASE_URL;
+
+const withBase = (path: string) => {
+  if (!path) return "";
+  if (base !== "/" && path.startsWith(base)) {
+    return path;
+  }
+  return `${base}${path.replace(/^\/+/, "")}`;
+};
+
+const currentPage = page.currentPage;
+const lastPage = page.lastPage;
+
+const getPageUrl = (pageNum: number) => {
+  const path = baseUrl.endsWith("/") ? baseUrl : baseUrl + "/";
+  if (pageNum === 1) {
+    return withBase(path);
+  }
+  return withBase(`${path}page/${pageNum}/`);
+};
+
+// 1ページ目と最終ページを必ず含め、手前の10刻みと現在地周辺を表示するロジック
+const generatePageList = (current: number, last: number) => {
+  const pageSet = new Set<number>();
+
+  // 1. 1ページ目（最初）を常に含める
+  if (last >= 1) {
+    pageSet.add(1);
+  }
+
+  // 2. 現在地周辺（前後2ページ = 計5個の島）
+  for (let i = current - 2; i <= current + 2; i++) {
+    if (i >= 1 && i <= last) {
+      pageSet.add(i);
+    }
+  }
+
+  // 3. 手前の10刻み（直近の1つだけ）
+  const prevTens: number[] = [];
+  for (let i = 10; i < current; i += 10) {
+    prevTens.push(i);
+  }
+  if (prevTens.length > 0) {
+    pageSet.add(prevTens[prevTens.length - 1]);
+  }
+
+  // 4. 先の10刻み（直近の1つだけ）
+  const nextTens: number[] = [];
+  for (let i = (Math.floor(current / 10) + 1) * 10; i < last; i += 10) {
+    nextTens.push(i);
+  }
+  if (nextTens.length > 0) {
+    pageSet.add(nextTens[0]);
+  }
+
+  // 5. 最終ページを常に含める
+  if (last > 1) {
+    pageSet.add(last);
+  }
+
+  const sortedNums = Array.from(pageSet).sort((a, b) => a - b);
+  const items: { num: number | null; type: "page" | "extend" }[] = [];
+
+  for (let i = 0; i < sortedNums.length; i++) {
+    const n = sortedNums[i];
+
+    items.push({ num: n, type: "page" });
+
+    if (i < sortedNums.length - 1) {
+      const nextN = sortedNums[i + 1];
+
+      if (nextN - n === 2) {
+        items.push({ num: n + 1, type: "page" });
+      } else if (nextN - n > 2) {
+        items.push({ num: null, type: "extend" });
+      }
+    }
+  }
+
+  return items;
+};
+
+const pageItems = generatePageList(currentPage, lastPage);
+---
+
+{lastPage > 1 && (
+  <div class="wp-pagenavi" role="navigation">
+    {page.url.prev && (
+      <a
+        class="previouspostslink"
+        rel="prev"
+        aria-label="前のページ"
+        href={currentPage === 2 ? getPageUrl(1) : withBase(page.url.prev)}
+      >
+        «
+      </a>
+    )}
+
+    {pageItems.map(({ num, type }) => {
+      if (type === "extend" || num === null) {
+        return <span class="extend">...</span>;
+      }
+
+      if (num === currentPage) {
+        return (
+          <span aria-current="page" class="current">
+            {num}
+          </span>
+        );
+      }
+
+      const sizeClass = num < currentPage ? "smaller" : "larger";
+
+      return (
+        <a
+          class={`page ${sizeClass}`}
+          title={`Page ${num}`}
+          href={getPageUrl(num)}
+        >
+          {num}
+        </a>
+      );
+    })}
+
+    {page.url.next && (
+      <a
+        class="nextpostslink"
+        rel="next"
+        aria-label="次のページ"
+        href={withBase(page.url.next)}
+      >
+        »
+      </a>
+    )}
+  </div>
+)}

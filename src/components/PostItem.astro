@@ -1,0 +1,64 @@
+---
+const { post, Content } = Astro.props;
+const base = import.meta.env.BASE_URL;
+
+const formatDate = (date: Date) => {
+  return new Date(date)
+    .toLocaleDateString("ja-JP", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    })
+    .replace(/\//g, ".");
+};
+---
+
+<article class="entry">
+  <h1>
+    <a href={`${base}sogetsu/${post.data.slug}/`} title={post.data.title}>
+      {post.data.title}
+    </a>
+  </h1>
+
+  <div class="entry-info">
+    <p class="entry-meta">Posted by : {formatDate(post.data.date)}</p>
+    <p class="entry-cate">
+      Category :{" "}
+      {post.data.categories?.map((cat: any, i: number) => {
+        const catUrl =
+          cat.slug === "sogetsu" || cat.slug === "tenjikai"
+            ? `${base}${cat.slug}/`
+            : `${base}sogetsu/${cat.slug}/`;
+        return (
+          <>
+            <a href={catUrl}>{cat.name}</a>
+            {cat.count ? ` (${cat.count})` : ""}
+            {i < post.data.categories.length - 1 ? ", " : ""}
+          </>
+        );
+      })}
+    </p>
+  </div>
+
+  <div class="entry-content">
+    <Content />
+  </div>
+
+  <p class="entry-tag">
+    Tags :{" "}
+    {post.data.tags?.map((t: any, i: number) => {
+      const rawSlug = typeof t === "string" ? t : t.slug || t.name;
+      let tSlug = rawSlug;
+      try {
+        tSlug = decodeURIComponent(rawSlug);
+      } catch {}
+      const tName = typeof t === "string" ? t : t.name || t.slug;
+      return (
+        <>
+          <a href={`${base}tag/${tSlug}/`}>{tName}</a>
+          {i < post.data.tags.length - 1 ? ", " : ""}
+        </>
+      );
+    })}
+  </p>
+</article>

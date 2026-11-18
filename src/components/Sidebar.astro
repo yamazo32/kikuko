@@ -1,0 +1,190 @@
+---
+import { getCollection } from "astro:content";
+
+const base = import.meta.env.BASE_URL;
+const posts = await getCollection("blog");
+
+// 1. タグの収集とカウント
+const tagCountMap = new Map<string, { name: string; count: number }>();
+
+posts.forEach((post) => {
+  post.data.tags?.forEach((tag) => {
+    const tagName = typeof tag === "string" ? tag : tag.name;
+    const tagSlug = typeof tag === "string" ? tag : tag.slug || tag.name;
+
+    if (tagName && tagSlug) {
+      const existing = tagCountMap.get(tagSlug);
+
+      if (existing) {
+        existing.count += 1;
+      } else {
+        tagCountMap.set(tagSlug, {
+          name: tagName,
+          count: 1,
+        });
+      }
+    }
+  });
+});
+
+const tagCounts = Array.from(tagCountMap.values()).map((tag) => tag.count);
+const minTagCount = tagCounts.length > 0 ? Math.min(...tagCounts) : 1;
+const maxTagCount = 69;
+
+const sortedTags = Array.from(tagCountMap.entries()).sort((a, b) =>
+  a[1].name.localeCompare(b[1].name, "ja"),
+);
+
+// 2. カテゴリーの投稿数カウントとサブカテゴリの収集
+const categoryCountMap = new Map<string, number>();
+const sogetsuSubCategories = new Map<string, { name: string; count: number }>();
+
+posts.forEach((post) => {
+  post.data.categories?.forEach((cat) => {
+    categoryCountMap.set(cat.slug, (categoryCountMap.get(cat.slug) || 0) + 1);
+
+    if (cat.slug !== "sogetsu" && cat.slug !== "tenjikai") {
+      const existing = sogetsuSubCategories.get(cat.slug);
+      if (existing) {
+        existing.count += 1;
+      } else {
+        sogetsuSubCategories.set(cat.slug, { name: cat.name, count: 1 });
+      }
+    }
+  });
+});
+
+const sogetsuTotalCount = categoryCountMap.get("sogetsu") || 0;
+const tenjikaiTotalCount = categoryCountMap.get("tenjikai") || 0;
+
+// 3. 草月サブカテゴリのカスタム並び順リスト
+const customOrder = [
+  "華楓",
+  "裕菘",
+  "敬菘",
+  "美紅",
+  "華梨",
+  "藤華",
+  "美華",
+  "鶯華",
+  "美玲",
+  "華汐",
+  "華晴",
+  "真華",
+  "久美子",
+  "みゆき",
+];
+
+// サブカテゴリの配列を取得してカスタム順にソート
+const sortedSogetsuSubCategories = Array.from(
+  sogetsuSubCategories.entries(),
+).sort((a, b) => {
+  const nameA = a[1].name;
+  const nameB = b[1].name;
+
+  const indexA = customOrder.indexOf(nameA);
+  const indexB = customOrder.indexOf(nameB);
+
+  // 両方とも指定リストに含まれている場合は、リストの定義順に従う
+  if (indexA !== -1 && indexB !== -1) {
+    return indexA - indexB;
+  }
+  // 片方だけリストに含まれている場合は、含まれている方を前にする
+  if (indexA !== -1) return -1;
+  if (indexB !== -1) return 1;
+
+  // どちらもリストにない場合は、五十音順で後ろに回す
+  return nameA.localeCompare(nameB, "ja");
+});
+---
+
+<!-- タグクラウド -->
+<aside class="widget widget_tag_cloud">
+  <h1>タグ</h1>
+  <div class="tagcloud">
+    {sortedTags.map(([tagSlug, { name: tagName, count }], index) => {
+      let fontSize = 8;
+      // カウントが最大値を超えても22ptで頭打ちにする
+      const effectiveCount = Math.min(count, maxTagCount);
+
+      if (maxTagCount > minTagCount) {
+        const ratio =
+          (effectiveCount - minTagCount) / (maxTagCount - minTagCount);
+        const curvedRatio = Math.pow(ratio, 0.6);
+        fontSize = 8 + curvedRatio * (22 - 8);
+      } else {
+        fontSize = 15;
+      }
+
+      return (
+        <a
+          href={`${base}tag/${tagSlug}/`}
+          class={`tag-cloud-link tag-link-position-${index + 1}`}
+          style={`font-size: ${fontSize.toFixed(2)}pt;`}
+          aria-label={`${tagName} (${count}個の項目)`}
+        >
+          {tagName}
+        </a>
+      );
+    })}
+  </div>
+</aside>
+<!-- /.widget_tag_cloud -->
+
+<!-- カテゴリー -->
+<aside class="widget widget_categories">
+  <h1>カテゴリー</h1>
+  <ul>
+    <li class="cat-item">
+      <a href={`${base}sogetsu/`}>
+        草月 <span class="count">{sogetsuTotalCount}</span>
+      </a>
+      {sortedSogetsuSubCategories.length > 0 && (
+        <ul class="children">
+          {sortedSogetsuSubCategories.map(([slug, { name, count }]) => (
+            <li class="cat-item">
+              <a href={`${base}sogetsu/${slug}/`}>
+                {name} <span class="count">{count}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </li>
+    <li class="cat-item">
+      <a href={`${base}tenjikai/`}>
+        展覧会 <span class="count">{tenjikaiTotalCount}</span>
+      </a>
+    </li>
+  </ul>
+</aside>
+<!-- /.widget_categories -->
+
+<!-- リンク集 -->
+<aside class="widget widget_link">
+  <h1>リンク集</h1>
+  <ul>
+    <li class="link-item">
+      <a
+        href="https://www.amazon.co.jp/?_encoding=UTF8&tag=tradingpost-22"
+        rel="nofollow"
+      >
+        amazon
+      </a>
+    </li>
+    <li class="link-item">
+      <a href="https://yamatoworks.net">ヤマトワークス</a>
+    </li>
+    <!-- <li class="link-item">
+      <a href="https://freelance32.net">
+        freelance32.net
+      </a>
+    </li> -->
+    <!-- <li class="link-item">
+      <a href="https://officepress.net">
+        officepress.net
+      </a>
+    </li> -->
+  </ul>
+</aside>
+<!-- /.widget widget_link -->

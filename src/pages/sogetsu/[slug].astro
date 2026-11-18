@@ -1,0 +1,175 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import PostItem from "../../components/PostItem.astro";
+import Pagination from "../../components/Pagination.astro";
+
+const base = import.meta.env.BASE_URL;
+
+export async function getStaticPaths() {
+  const getTimestamp = (dateVal: any) => {
+    if (!dateVal) return 0;
+    const normalized =
+      typeof dateVal === "string" ? dateVal.replace(/-/g, "/") : dateVal;
+    const time = new Date(normalized).valueOf();
+    return Number.isNaN(time) ? 0 : time;
+  };
+
+  const posts = (await getCollection("blog")).filter(
+    (p) => p.data.status === "publish",
+  );
+
+  // 記事ページのパス
+  const articlePaths = posts.map((post) => ({
+    params: { slug: post.data.slug },
+    props: { kind: "article", post },
+  }));
+
+  // 子カテゴリごとに記事をまとめる
+  const subCategoryMap = new Map<string, any[]>();
+
+  posts.forEach((p) => {
+    p.data.categories?.forEach((cat: any) => {
+      if (
+        cat.slug &&
+        cat.slug !== "sogetsu" &&
+        cat.slug !== "tenjikai" &&
+        !cat.slug.startsWith("tag/")
+      ) {
+        if (!subCategoryMap.has(cat.slug)) {
+          subCategoryMap.set(cat.slug, []);
+        }
+        subCategoryMap.get(cat.slug)!.push(p);
+      }
+    });
+  });
+
+  // 子カテゴリページのパス
+  const categoryPaths = Array.from(subCategoryMap.entries()).map(
+    ([subSlug, catPosts]) => {
+      const sortedPosts = catPosts.sort(
+        (a, b) => getTimestamp(b.data.date) - getTimestamp(a.data.date),
+      );
+
+      const categoryName =
+        sortedPosts[0]?.data.categories?.find((c: any) => c.slug === subSlug)
+          ?.name || subSlug;
+
+      return {
+        params: { slug: subSlug },
+        props: {
+          kind: "category",
+          posts: sortedPosts,
+          categoryName,
+        },
+      };
+    },
+  );
+
+  return [...articlePaths, ...categoryPaths];
+}
+
+const { kind, post, posts, categoryName } = Astro.props;
+
+let Content: any;
+if (kind === "article") {
+  const rendered = await render(post);
+  Content = rendered.Content;
+}
+
+const formatDate = (date: Date) => {
+  return new Date(date)
+    .toLocaleDateString("ja-JP", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    })
+    .replace(/\//g, ".");
+};
+
+const pageSize = 10;
+const currentPosts = kind === "category" ? posts.slice(0, pageSize) : [];
+
+const postsWithContent =
+  kind === "category"
+    ? await Promise.all(
+        currentPosts.map(async (p: any) => {
+          const rendered = await render(p);
+          return { post: p, Content: rendered.Content };
+        }),
+      )
+    : [];
+
+const slug = Astro.params.slug;
+
+const page =
+  kind === "category"
+    ? {
+        currentPage: 1,
+        lastPage: Math.ceil(posts.length / pageSize),
+        url: {
+          prev: null,
+          next: posts.length > pageSize ? `/sogetsu/${slug}/page/2/` : null,
+        },
+      }
+    : null;
+---
+
+{kind === "article" ? (
+  <Layout title={`${post.data.title} - kikuko.info`}>
+    <article class="entry">
+      <h1>
+        <a href="#">{post.data.title}</a>
+      </h1>
+
+      <div class="entry-info">
+        <p class="entry-meta">Posted by : {formatDate(post.data.date)}</p>
+        <p class="entry-cate">
+          Category :{" "}
+          {post.data.categories?.map((cat: any, i: number) => {
+            const catUrl =
+              cat.slug === "sogetsu" || cat.slug === "tenjikai"
+                ? `${base}${cat.slug}/`
+                : `${base}sogetsu/${cat.slug}/`;
+            return (
+              <>
+                <a href={catUrl}>{cat.name}</a>
+                {i < post.data.categories.length - 1 ? ", " : ""}
+              </>
+            );
+          })}
+        </p>
+      </div>
+
+      <div class="entry-content">
+        <Content />
+      </div>
+
+      <p class="entry-tag">
+        Tags :{" "}
+        {post.data.tags?.map((tag: any, i: number) => {
+          const tSlug = typeof tag === "string" ? tag : tag.slug;
+          const tName = typeof tag === "string" ? tag : tag.name;
+          return (
+            <>
+              <a href={`${base}tag/${tSlug}/`}>{tName}</a>
+              {i < post.data.tags.length - 1 ? ", " : ""}
+            </>
+          );
+        })}
+      </p>
+    </article>
+  </Layout>
+) : (
+  <Layout title={`Category: ${categoryName} - kikuko.info`}>
+    <p class="page-title">
+      Category Archives: <span>{categoryName}</span>
+    </p>
+
+    {postsWithContent.map(({ post, Content }) => (
+      <PostItem post={post} Content={Content} />
+    ))}
+
+    <Pagination page={page} baseUrl={`/sogetsu/${slug}/`} />
+  </Layout>
+)}

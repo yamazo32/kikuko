@@ -1,0 +1,44 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "../../../layouts/Layout.astro";
+import PostItem from "../../../components/PostItem.astro";
+import Pagination from "../../../components/Pagination.astro";
+
+export async function getStaticPaths({ paginate }) {
+  // status: "publish" かつ sogetsu カテゴリのものに絞り込む
+  const posts = (await getCollection("blog"))
+    .filter(
+      (p) =>
+        p.data.status === "publish" &&
+        p.data.categories?.some((c: any) => c.slug === "sogetsu"),
+    )
+    .sort(
+      (a, b) =>
+        new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf(),
+    );
+
+  return paginate(posts, { pageSize: 10 });
+}
+
+const { page } = Astro.props;
+const posts = page.data;
+
+const postsWithContent = await Promise.all(
+  posts.map(async (p: any) => {
+    const { Content } = await render(p);
+    return { post: p, Content };
+  }),
+);
+---
+
+<Layout title={`Category: 草月 (Page ${page.currentPage}) - kikuko.info`}>
+  <p class="page-title">
+    Category Archives: <span>草月</span>
+  </p>
+
+  {postsWithContent.map(({ post, Content }) => (
+    <PostItem post={post} Content={Content} />
+  ))}
+
+  <Pagination page={page} baseUrl="/sogetsu/" />
+</Layout>

@@ -1,0 +1,20 @@
+{
+  "name": "kikuko.astro",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.23.4"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/markdown-remark": "^7.3.9",
+    "@astrojs/sitemap": "^3.7.5",
+    "astro": "^7.4.5",
+    "rehype-raw": "^7.0.0"
+  }
+}
