@@ -9,9 +9,7 @@ status: "publish"
 
 <ul id="childclass">
 <li><a href="/wp-content/uploads/2010/02/CIMG0042.jpg" class="highslide" onclick="return hs.expand(this)"><img src="/wp-content/uploads/2010/02/CIMG0042.jpg" alt="" width="336" height="448" /></a><br /><br />新沼 薫<br /></li>
-<li><a href="/wp-content/uploads/2010/02/CIMG0042.jpg" class="highslide" onclick="return hs.expand(this)"><img src="/wp-content/uploads/2010/02/CIMG0042.jpg" alt="" width="336" height="448" /></a>
-
-<a href="/wp-content/uploads/2010/02/CIMG0043.jpg" class="highslide" onclick="return hs.expand(this)"><img src="/wp-content/uploads/2010/02/CIMG0043.jpg" alt="" width="336" height="448" /></a><br /><br />新沼 栞<br /></li>
+<li><a href="/wp-content/uploads/2010/02/CIMG0043.jpg" class="highslide" onclick="return hs.expand(this)"><img src="/wp-content/uploads/2010/02/CIMG0043.jpg" alt="" width="336" height="448" /></a><br /><br />新沼 栞<br /></li>
 <li><a href="/wp-content/uploads/2010/02/CIMG0044.jpg" class="highslide" onclick="return hs.expand(this)"><img src="/wp-content/uploads/2010/02/CIMG0044.jpg" alt="" width="336" height="448" /></a><br /><br />佐藤 美晴<br /></li>
 <li><a href="/wp-content/uploads/2010/02/CIMG0045.jpg" class="highslide" onclick="return hs.expand(this)"><img src="/wp-content/uploads/2010/02/CIMG0045.jpg" alt="" width="336" height="448" /></a><br /><br />志田 智美<br /></li>
 <li><a href="/wp-content/uploads/2010/02/CIMG0047.jpg" class="highslide" onclick="return hs.expand(this)"><img src="/wp-content/uploads/2010/02/CIMG0047.jpg" alt="" width="336" height="448" /></a><br /><br />新田 沙耶<br /></li>
