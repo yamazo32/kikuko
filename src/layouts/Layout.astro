@@ -135,8 +135,20 @@ const base = import.meta.env.BASE_URL;
     </footer>
     <!-- /.footer -->
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <!-- Global site tag - Google Analytics -->
     <script
+      async
+      src="https://www.googletagmanager.com/gtm.js?id=G-TDELNYCYN8"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+    </script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <!-- <script
       async
       src="https://www.googletagmanager.com/gtag/js?id=UA-28945714-6"
     ></script>
@@ -147,6 +159,6 @@ const base = import.meta.env.BASE_URL;
       }
       gtag("js", new Date());
       gtag("config", "UA-28945714-6");
-    </script>
+    </script> -->
   </body>
 </html>
