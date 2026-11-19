@@ -4,12 +4,12 @@ import sitemap from '@astrojs/sitemap';
 import rehypeRaw from 'rehype-raw';
 import rehypeBasePath from './plugins/rehype-base-path.js';
 
-// 独自ドメイン直下（ルート）で運用するため、base は空文字列または "/" にします
-const base = '/kikuko/';
+// 独自ドメインは直下（ルート）で運用するため、base は空文字列または "/" にします
+const base = '/';
 
 export default defineConfig({
-  // site: 'https://kikuko.info',
-  site: 'https://****.github.io',
+  site: 'https://kikuko.info',
+  // site: 'https://****.github.io',
   base,
 
   markdown: {
