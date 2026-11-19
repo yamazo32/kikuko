@@ -1,15 +1,15 @@
 ---
-title: "伝統文化こども教室"
+title: "伝統文化こども教室　卒業作品"
 date: "2010-02-14 19:30:06"
-slug: "childclass"
-categories: [{"name":"草月","slug":"sogetsu"}]
-tags: []
+slug: "childclass_20100215"
+categories: [{"name":"合作・展示会・その他","slug":"tenjikai"}]
+tags: [{"name":"子ども教室","slug":"childclass"}]
 status: "publish"
 ---
 
 <ul id="childclass">
 <li><a href="/wp-content/uploads/2010/02/CIMG0042.jpg" class="highslide" onclick="return hs.expand(this)"><img src="/wp-content/uploads/2010/02/CIMG0042.jpg" alt="" width="336" height="448" /></a><br /><br />新沼 薫<br /></li>
-<li><a href="/wp-content/uploads/2010/02/CIMG0042.jpg"><img src="/wp-content/uploads/2010/02/CIMG0042.jpg" alt="" width="336" height="448" /></a>
+<li><a href="/wp-content/uploads/2010/02/CIMG0042.jpg" class="highslide" onclick="return hs.expand(this)"><img src="/wp-content/uploads/2010/02/CIMG0042.jpg" alt="" width="336" height="448" /></a>
 
 <a href="/wp-content/uploads/2010/02/CIMG0043.jpg" class="highslide" onclick="return hs.expand(this)"><img src="/wp-content/uploads/2010/02/CIMG0043.jpg" alt="" width="336" height="448" /></a><br /><br />新沼 栞<br /></li>
 <li><a href="/wp-content/uploads/2010/02/CIMG0044.jpg" class="highslide" onclick="return hs.expand(this)"><img src="/wp-content/uploads/2010/02/CIMG0044.jpg" alt="" width="336" height="448" /></a><br /><br />佐藤 美晴<br /></li>

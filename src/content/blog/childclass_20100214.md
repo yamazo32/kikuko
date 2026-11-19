@@ -1,9 +1,9 @@
 ---
-title: "伝統文化いけ花こども教室　卒業作品"
+title: "伝統文化いけ花こども教室"
 date: "2010-02-15 07:23:07"
-slug: "gassaku_20100214"
+slug: "childclass_20100214"
 categories: [{"name":"合作・展示会・その他","slug":"tenjikai"}]
-tags: [{"name":"合作","slug":"collabo"}]
+tags: [{"name":"子ども教室","slug":"childclass"}]
 status: "publish"
 ---
 
