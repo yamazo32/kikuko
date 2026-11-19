@@ -2,7 +2,7 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import rehypeRaw from 'rehype-raw';
-import rehypeBasePath from './src/rehype-base-path.js';
+import rehypeBasePath from './plugins/rehype-base-path.js';
 
 // 独自ドメイン直下（ルート）で運用するため、base は空文字列または "/" にします
 const base = '/kikuko/';
