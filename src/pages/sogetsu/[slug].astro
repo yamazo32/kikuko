@@ -116,7 +116,7 @@ const page =
 ---
 
 {kind === "article" ? (
-  <Layout title={`${post.data.title} - kikuko.info`}>
+  <Layout title={`${post.data.title} | 喜久子教室 草月/京都きもの専門学院`}>
     <article class="entry">
       <h1>
         <a href="#">{post.data.title}</a>
@@ -161,7 +161,9 @@ const page =
     </article>
   </Layout>
 ) : (
-  <Layout title={`Category: ${categoryName} - kikuko.info`}>
+  <Layout
+    title={`Category: ${categoryName} | 喜久子教室 草月/京都きもの専門学院`}
+  >
     <p class="page-title">
       Category Archives: <span>{categoryName}</span>
     </p>
